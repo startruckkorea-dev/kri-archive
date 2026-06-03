@@ -193,8 +193,8 @@ const KRI_CONTACT = 'stk_it@hyosung.com'; // KRI_CONTACT from system_config
 const ITSD_FOLDER = {
   no: '—',
   name: 'STK Backup ITSD',
-  admin_name: 'Jimmy Lee',
-  admin_email: 'jimmy.lee@hyosung.com',       // KRI_ADMIN_1
+  admin_name: 'IT System Account',
+  admin_email: 'stk_it@hyosung.com',         // KRI_IT
   head_dept: 'CFO',
   head_email: 'martin.s.schindele@hyosung.com', // KRI_CFO
   owners: 'RD, CEO',
@@ -205,8 +205,8 @@ const CATEGORIES = [
   {
     "no": "01",
     "name": "Authorization Request",
-    "admin_name": "jimmy.lee",
-    "admin_email": "jimmy.lee@hyosung.com",
+    "admin_name": "IT System Account",
+    "admin_email": "stk_it@hyosung.com",
     "head_dept": "CFO",
     "head_email": "martin.s.schindele@hyosung.com",
     "owners": "RD, CEO",
@@ -469,11 +469,19 @@ const CATEGORIES = [
 ];
 const ALLOWED_EMAILS = ["jimmy.lee@hyosung.com", "robin.joo@hyosung.com", "alice.kim@hyosung.com", "eunjung.seo@hyosung.com", "hye-jin.yun@hyosung.com", "dongho.kim@hyosung.com", "jihyun.ma@hyosung.com", "hyunju.gong@hyosung.com", "soo-in.ko@hyosung.com", "hyeongsu.park@hyosung.com", "martin.s.schindele@hyosung.com", "donghyun.oh@hyosung.com", "chiseong.won@hyosung.com", "keuntae.dong@hyosung.com", "antonio.randazzo@hyosung.com"];
 
+// KRI_ADMIN_1~3 — 모든 카테고리 접근 허용 (super admin)
+const KRI_ADMINS = [
+  'jimmy.lee@hyosung.com',       // KRI_ADMIN_1
+  'keuntae.dong@hyosung.com',    // KRI_ADMIN_2
+  'antonio.randazzo@hyosung.com', // KRI_ADMIN_3
+];
+
 let msal_g = null, _currentHref = null, _currentCat = null, user = null;
 
-// 해당 카테고리 담당자 여부 (BU Admin + Access Head + Data Owner)
+// 해당 카테고리 담당자 여부 (KRI_ADMIN은 전체 허용, 그 외 BU Admin + Access Head + Data Owner)
 function isCatAllowed(cat, account) {
   const email = (account.username || '').toLowerCase();
+  if (KRI_ADMINS.map(e => e.toLowerCase()).includes(email)) return true;
   const adminEmails = cat.admin_email.split(/[;,]/).map(e => e.trim().toLowerCase());
   const headEmail   = (cat.head_email || '').toLowerCase();
   const ownerEmails = cat.owner_emails.split(/[;,]/).map(e => e.trim().toLowerCase());
