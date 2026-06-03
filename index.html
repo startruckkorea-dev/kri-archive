@@ -32,7 +32,7 @@ header{background:#fff;border-bottom:1px solid #edebe9;padding:0 24px;height:52p
 .logo-sub a{color:#0078d4;text-decoration:none}
 .logo-sub a:hover{text-decoration:underline}
 .header-right{display:flex;align-items:center;gap:10px}
-#user-name{font-size:.78rem;color:#605e5c}
+#user-name{font-size:.8rem;color:#605e5c}
 .btn-logout{background:#fff;border:1px solid #d2d0ce;border-radius:4px;padding:5px 14px;font-size:.78rem;cursor:pointer;color:#323130;font-family:inherit}
 .btn-logout:hover{background:#f3f2f1}
 
@@ -681,7 +681,7 @@ async function boot(account) {
 
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
-  document.getElementById('user-name').textContent = account.name || account.username;
+  document.getElementById('user-name').textContent = (account.name || account.username) + ' (' + (user.email || account.username) + ')';
 }
 
 window.addEventListener('load', async () => {
