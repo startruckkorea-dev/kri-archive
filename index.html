@@ -11,8 +11,6 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:#f8f9fa;color:#1a1a2e;min-height:100vh}
-
-/* Login */
 #login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(145deg,#0f2744 0%,#0078d4 100%)}
 .login-card{background:#fff;border-radius:20px;padding:52px 48px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.22);max-width:400px;width:100%}
 .login-logo{width:64px;height:64px;background:linear-gradient(135deg,#1d4ed8,#0078d4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 20px;box-shadow:0 8px 20px rgba(0,120,212,.3)}
@@ -22,8 +20,6 @@ body{font-family:'DM Sans',sans-serif;background:#f8f9fa;color:#1a1a2e;min-heigh
 .btn-login:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,120,212,.4)}
 .btn-login:disabled{background:#cbd5e0;cursor:not-allowed;transform:none;box-shadow:none}
 #login-err{color:#e53e3e;font-size:.78rem;margin-top:10px;display:none}
-
-/* App */
 #app{display:none}
 header{background:#fff;border-bottom:1px solid #e9ecef;padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between}
 .logo{display:flex;align-items:center;gap:10px}
@@ -34,13 +30,10 @@ header{background:#fff;border-bottom:1px solid #e9ecef;padding:0 32px;height:56p
 #user-name{font-size:.8rem;color:#605e5c}
 .btn-logout{background:#fff;border:1px solid #d2d0ce;border-radius:4px;padding:5px 14px;font-size:.78rem;cursor:pointer;color:#323130}
 .btn-logout:hover{background:#f3f2f1}
-
 main{max-width:1080px;margin:0 auto;padding:40px 24px 80px}
 .page-title{font-size:20px;font-weight:600;color:#111;margin-bottom:4px}
 .page-sub{font-size:13px;color:#888;margin-bottom:36px}
 .section-title{font-size:11px;font-weight:600;color:#aaa;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #e9ecef}
-
-/* Folder */
 .folder-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;margin-bottom:40px}
 .folder-card{background:#fff;border:1px solid #e9ecef;border-radius:8px;padding:14px 16px;text-decoration:none;color:#111;display:flex;align-items:center;justify-content:space-between;gap:8px;transition:box-shadow .15s,border-color .15s}
 .folder-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);border-color:#1d4ed8}
@@ -48,8 +41,6 @@ main{max-width:1080px;margin:0 auto;padding:40px 24px 80px}
 .folder-meta{font-size:11px;color:#aaa;font-family:'DM Mono',monospace}
 .folder-arrow{font-size:14px;color:#ccc;flex-shrink:0}
 .folder-card:hover .folder-arrow{color:#1d4ed8}
-
-/* Category cards — clean, no badges */
 .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px;margin-bottom:40px}
 .cat-card{background:#fff;border:1px solid #e9ecef;border-radius:8px;padding:14px 16px;cursor:pointer;transition:box-shadow .15s,border-color .15s;display:flex;align-items:center;justify-content:space-between;gap:8px}
 .cat-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);border-color:#1d4ed8}
@@ -58,35 +49,28 @@ main{max-width:1080px;margin:0 auto;padding:40px 24px 80px}
 .cat-name{font-size:13px;font-weight:600;color:#111;line-height:1.4}
 .cat-arrow{font-size:14px;color:#ccc;flex-shrink:0}
 .cat-card:hover .cat-arrow{color:#1d4ed8}
-
 footer{background:#fff;border-top:1px solid #e9ecef;padding:16px 32px;text-align:center;font-size:12px;color:#aaa}
-
-/* Info popup (role details on card click) */
 #info-modal{display:none;position:fixed;inset:0;z-index:9000;background:rgba(15,39,68,.35);backdrop-filter:blur(3px);align-items:center;justify-content:center}
 #info-modal.open{display:flex}
 .info-box{background:#fff;border-radius:14px;padding:32px 36px;max-width:420px;width:92%;box-shadow:0 20px 50px rgba(0,0,0,.16);animation:popIn .18s ease;position:relative}
+.info-close{position:absolute;top:14px;right:16px;background:none;border:none;font-size:1.1rem;cursor:pointer;color:#94a3b8;line-height:1}
+.info-close:hover{color:#374151}
 .info-box-title{font-size:.95rem;font-weight:700;color:#0f2744;margin-bottom:4px;padding-right:24px}
 .info-box-no{font-size:.72rem;color:#aaa;font-family:'DM Mono',monospace;margin-bottom:20px}
 .info-row{display:flex;flex-direction:column;gap:3px;padding:10px 0;border-bottom:1px solid #f1f5f9}
-.info-row:last-child{border-bottom:none}
+.info-row:last-of-type{border-bottom:none}
 .info-lbl{font-size:.72rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.8px}
 .info-val{font-size:.82rem;color:#1e293b;font-weight:500}
 .info-email{font-size:.78rem;color:#0369a1;font-family:'DM Mono',monospace}
-.info-close{position:absolute;top:14px;right:16px;background:none;border:none;font-size:1.1rem;cursor:pointer;color:#94a3b8;line-height:1}
-.info-close:hover{color:#374151}
 .info-open-btn{display:block;width:100%;margin-top:20px;background:#1d4ed8;color:#fff;border:none;border-radius:8px;padding:10px 0;font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit;transition:background .15s}
 .info-open-btn:hover{background:#1e40af}
-
-/* No-auth modal */
 #no-auth-modal{display:none;position:fixed;inset:0;z-index:9999;background:rgba(15,39,68,.45);backdrop-filter:blur(4px);align-items:center;justify-content:center}
 #no-auth-modal.show{display:flex}
-
 @keyframes popIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
 </style>
 </head>
 <body>
 
-<!-- Login -->
 <div id="login-screen">
   <div class="login-card">
     <div class="login-logo">📁</div>
@@ -98,7 +82,6 @@ footer{background:#fff;border-top:1px solid #e9ecef;padding:16px 32px;text-align
   </div>
 </div>
 
-<!-- App -->
 <div id="app">
   <header>
     <div class="logo">
@@ -113,11 +96,9 @@ footer{background:#fff;border-top:1px solid #e9ecef;padding:16px 32px;text-align
       <button class="btn-logout" onclick="signOut()">로그아웃</button>
     </div>
   </header>
-
   <main>
     <div class="page-title">Document Archive</div>
     <div class="page-sub">U-Business 인트라넷 결재 시스템 백업 아카이브 — 클릭하면 해당 SharePoint 폴더로 이동합니다.</div>
-
     <div class="section-title">Top-Level Folders</div>
     <div class="folder-grid">
     <a class="folder-card" href="https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FCompany%20%2D%20Policies%20%26%20Guidelines&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx" target="_blank"><div><div class="folder-name">Company - Policies &amp; Guidelines</div><div class="folder-meta">2026.04.15</div></div><span class="folder-arrow">↗</span></a>
@@ -125,11 +106,9 @@ footer{background:#fff;border-top:1px solid #e9ecef;padding:16px 32px;text-align
     <a class="folder-card" href="https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%5FITSD&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx" target="_blank"><div><div class="folder-name">STK_Backup_ITSD</div><div class="folder-meta">IT Service Desk · 2026.05.30</div></div><span class="folder-arrow">↗</span></a>
     <a class="folder-card" href="https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%5FOthers&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx" target="_blank"><div><div class="folder-name">STK_Backup_Others</div><div class="folder-meta">Bulletin &amp; News · 2026.05.30</div></div><span class="folder-arrow">↗</span></a>
     </div>
-
     <div class="section-title">U-Business Archive — 24 Categories</div>
     <div class="cards-grid" id="cards-grid"></div>
   </main>
-
   <footer>© 2026 Star Truck Korea · KR Intranet Archive · STK IT Dept.</footer>
 </div>
 
@@ -145,16 +124,16 @@ footer{background:#fff;border-top:1px solid #e9ecef;padding:16px 32px;text-align
       <div class="info-email" id="info-admin-email"></div>
     </div>
     <div class="info-row">
-      <div class="info-lbl">Access Management Head</div>
+      <div class="info-lbl">Access Mgmt. Head</div>
       <div class="info-val" id="info-head-dept"></div>
       <div class="info-email" id="info-head-email"></div>
     </div>
     <div class="info-row">
       <div class="info-lbl">Data Owner</div>
       <div class="info-val" id="info-owner-roles"></div>
-      <div class="info-email" id="info-owner-email"></div>
+      <div class="info-email" id="info-owner-emails"></div>
     </div>
-    <button class="info-open-btn" id="info-open-btn" onclick="openFolder()">SharePoint 폴더 열기 ↗</button>
+    <button class="info-open-btn" onclick="openFolder()">SharePoint 폴더 열기 ↗</button>
   </div>
 </div>
 
@@ -182,20 +161,6 @@ footer{background:#fff;border-top:1px solid #e9ecef;padding:16px 32px;text-align
 const CLIENT_ID = '432976c2-b43a-492e-8213-ece505fa1f51';
 const TENANT_ID = '19cab1f5-21f4-44df-8ac6-96d6ca595203';
 const SCOPES    = ['User.Read'];
-
-// Access Head / Data Owner 이메일 — 이메일 확정 후 여기에 추가
-const ACCESS_HEAD_EMAILS = {
-  'CFO':        '(미등록)',
-  'HR':         '(미등록)',
-  'Sales':      '(미등록)',
-  'Compliance': '(미등록)',
-  'CSP':        '(미등록)',
-};
-const DATA_OWNER_EMAILS = {
-  'RD':  '(미등록)',
-  'CEO': '(미등록)',
-};
-
 const CATEGORIES = [
   {
     "no": "01",
@@ -203,7 +168,9 @@ const CATEGORIES = [
     "admin_name": "jimmy.lee",
     "admin_email": "jimmy.lee@hyosung.com",
     "head_dept": "CFO",
+    "head_email": "martin.s.schindele@hyosung.com",
     "owners": "RD, CEO",
+    "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FAuthorization%20Request&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -212,7 +179,9 @@ const CATEGORIES = [
     "admin_name": "robin.joo",
     "admin_email": "robin.joo@hyosung.com",
     "head_dept": "HR",
+    "head_email": "robin.joo@hyosung.com",
     "owners": "RD, CEO",
+    "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FBusiness%20Card%20Order&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -221,7 +190,9 @@ const CATEGORIES = [
     "admin_name": "alice.kim",
     "admin_email": "alice.kim@hyosung.com",
     "head_dept": "Sales",
+    "head_email": "donghyun.oh@hyosung.com",
     "owners": "RD, CEO",
+    "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FBusiness%20Partner%20Sales&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -230,7 +201,9 @@ const CATEGORIES = [
     "admin_name": "robin.joo",
     "admin_email": "robin.joo@hyosung.com",
     "head_dept": "HR",
+    "head_email": "robin.joo@hyosung.com",
     "owners": "RD, CEO",
+    "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FCertificate%20of%20Employment&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -239,7 +212,9 @@ const CATEGORIES = [
     "admin_name": "robin.joo",
     "admin_email": "robin.joo@hyosung.com",
     "head_dept": "HR",
+    "head_email": "robin.joo@hyosung.com",
     "owners": "RD, CEO",
+    "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FCertificate%20of%20Income&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -248,7 +223,9 @@ const CATEGORIES = [
     "admin_name": "eunjung.seo",
     "admin_email": "eunjung.seo@hyosung.com",
     "head_dept": "Compliance",
+    "head_email": "eunjung.seo@hyosung.com",
     "owners": "RD, CEO",
+    "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FCompliance%20Consulation%20Desk&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -257,7 +234,9 @@ const CATEGORIES = [
     "admin_name": "alice.kim",
     "admin_email": "alice.kim@hyosung.com",
     "head_dept": "Sales",
+    "head_email": "donghyun.oh@hyosung.com",
     "owners": "RD, CEO",
+    "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FCustomer%20Master%20Management&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -266,7 +245,9 @@ const CATEGORIES = [
     "admin_name": "hye-jin.yun",
     "admin_email": "hye-jin.yun@hyosung.com",
     "head_dept": "CFO",
+    "head_email": "martin.s.schindele@hyosung.com",
     "owners": "RD, CEO",
+    "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FDemo%20Car%20Application&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -275,7 +256,9 @@ const CATEGORIES = [
     "admin_name": "dongho.kim",
     "admin_email": "dongho.kim@hyosung.com",
     "head_dept": "CSP",
+    "head_email": "chiseong.won@hyosung.com",
     "owners": "RD, CEO",
+    "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FGoodwill%5FTech%2DCare%20Use&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -284,7 +267,9 @@ const CATEGORIES = [
     "admin_name": "hye-jin.yun",
     "admin_email": "hye-jin.yun@hyosung.com",
     "head_dept": "CFO",
+    "head_email": "martin.s.schindele@hyosung.com",
     "owners": "RD, CEO",
+    "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FID%20Card%20Order&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -293,7 +278,9 @@ const CATEGORIES = [
     "admin_name": "eunjung.seo",
     "admin_email": "eunjung.seo@hyosung.com",
     "head_dept": "Compliance",
+    "head_email": "eunjung.seo@hyosung.com",
     "owners": "RD, CEO",
+    "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FLegal%20Help%20Desk&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -302,7 +289,9 @@ const CATEGORIES = [
     "admin_name": "robin.joo",
     "admin_email": "robin.joo@hyosung.com",
     "head_dept": "HR",
+    "head_email": "robin.joo@hyosung.com",
     "owners": "RD, CEO",
+    "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FManpower%20Requisition&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -311,7 +300,9 @@ const CATEGORIES = [
     "admin_name": "jihyun.ma / hyunju.gong",
     "admin_email": "jihyun.ma@hyosung.com; hyunju.gong@hyosung.com",
     "head_dept": "CFO",
+    "head_email": "martin.s.schindele@hyosung.com",
     "owners": "RD, CEO",
+    "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FMaster%20Data%20Management&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -320,7 +311,9 @@ const CATEGORIES = [
     "admin_name": "hye-jin.yun",
     "admin_email": "hye-jin.yun@hyosung.com",
     "head_dept": "CFO",
+    "head_email": "martin.s.schindele@hyosung.com",
     "owners": "RD, CEO",
+    "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FMobility%20Car%20Application&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -329,7 +322,9 @@ const CATEGORIES = [
     "admin_name": "hye-jin.yun",
     "admin_email": "hye-jin.yun@hyosung.com",
     "head_dept": "CFO",
+    "head_email": "martin.s.schindele@hyosung.com",
     "owners": "RD, CEO",
+    "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FOffice%20Administration&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -338,7 +333,9 @@ const CATEGORIES = [
     "admin_name": "soo-in.ko",
     "admin_email": "soo-in.ko@hyosung.com",
     "head_dept": "CSP",
+    "head_email": "chiseong.won@hyosung.com",
     "owners": "RD, CEO",
+    "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FParts%20Cannibalizing&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -347,7 +344,9 @@ const CATEGORIES = [
     "admin_name": "hyunju.gong",
     "admin_email": "hyunju.gong@hyosung.com",
     "head_dept": "CFO",
+    "head_email": "martin.s.schindele@hyosung.com",
     "owners": "RD, CEO",
+    "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FPolicy%20Deviation%20Report&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -356,7 +355,9 @@ const CATEGORIES = [
     "admin_name": "robin.joo",
     "admin_email": "robin.joo@hyosung.com",
     "head_dept": "HR",
+    "head_email": "robin.joo@hyosung.com",
     "owners": "RD, CEO",
+    "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FProbation%20Confirmation&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -365,7 +366,9 @@ const CATEGORIES = [
     "admin_name": "hye-jin.yun",
     "admin_email": "hye-jin.yun@hyosung.com",
     "head_dept": "CFO",
+    "head_email": "martin.s.schindele@hyosung.com",
     "owners": "RD, CEO",
+    "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FRepair%20Report&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -374,7 +377,9 @@ const CATEGORIES = [
     "admin_name": "hye-jin.yun",
     "admin_email": "hye-jin.yun@hyosung.com",
     "head_dept": "CFO",
+    "head_email": "martin.s.schindele@hyosung.com",
     "owners": "RD, CEO",
+    "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FStationery%20Purchase%20Order&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -383,7 +388,9 @@ const CATEGORIES = [
     "admin_name": "hye-jin.yun",
     "admin_email": "hye-jin.yun@hyosung.com",
     "head_dept": "CFO",
+    "head_email": "martin.s.schindele@hyosung.com",
     "owners": "RD, CEO",
+    "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FSTK%20Contract%20Checklist&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -392,7 +399,9 @@ const CATEGORIES = [
     "admin_name": "hyeongsu.park",
     "admin_email": "hyeongsu.park@hyosung.com",
     "head_dept": "CSP",
+    "head_email": "chiseong.won@hyosung.com",
     "owners": "RD, CEO",
+    "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FTechnical%20Service%20Proposal%20Approval&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -401,7 +410,9 @@ const CATEGORIES = [
     "admin_name": "jihyun.ma",
     "admin_email": "jihyun.ma@hyosung.com",
     "head_dept": "CFO",
+    "head_email": "martin.s.schindele@hyosung.com",
     "owners": "RD, CEO",
+    "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FVendor%20Master%20Management&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -410,23 +421,13 @@ const CATEGORIES = [
     "admin_name": "hyeongsu.park",
     "admin_email": "hyeongsu.park@hyosung.com",
     "head_dept": "CSP",
+    "head_email": "chiseong.won@hyosung.com",
     "owners": "RD, CEO",
+    "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FWarranty%20Part%20Use&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   }
 ];
-
-const ALLOWED_EMAILS = [
-  'jimmy.lee@hyosung.com',
-  'robin.joo@hyosung.com',
-  'alice.kim@hyosung.com',
-  'eunjung.seo@hyosung.com',
-  'hye-jin.yun@hyosung.com',
-  'dongho.kim@hyosung.com',
-  'jihyun.ma@hyosung.com',
-  'hyunju.gong@hyosung.com',
-  'soo-in.ko@hyosung.com',
-  'hyeongsu.park@hyosung.com',
-];
+const ALLOWED_EMAILS = ["jimmy.lee@hyosung.com", "robin.joo@hyosung.com", "alice.kim@hyosung.com", "eunjung.seo@hyosung.com", "hye-jin.yun@hyosung.com", "dongho.kim@hyosung.com", "jihyun.ma@hyosung.com", "hyunju.gong@hyosung.com", "soo-in.ko@hyosung.com", "hyeongsu.park@hyosung.com", "martin.s.schindele@hyosung.com", "donghyun.oh@hyosung.com", "chiseong.won@hyosung.com", "keuntae.dong@hyosung.com", "antonio.randazzo@hyosung.com"];
 
 let msal_g = null, _currentHref = null;
 
@@ -435,11 +436,9 @@ function isAllowed(account) {
   return ALLOWED_EMAILS.map(e => e.toLowerCase()).includes(email);
 }
 
-// ── Render cards ──
 function renderCards() {
-  const grid = document.getElementById('cards-grid');
-  grid.innerHTML = CATEGORIES.map(c => `
-    <div class="cat-card" onclick="openInfo(${JSON.stringify(c).replace(/"/g,'&quot;')})">
+  document.getElementById('cards-grid').innerHTML = CATEGORIES.map(c => `
+    <div class="cat-card" onclick='openInfo(${JSON.stringify(c)})'>
       <div class="cat-left">
         <span class="cat-no">${c.no}</span>
         <span class="cat-name">${c.name}</span>
@@ -449,7 +448,6 @@ function renderCards() {
   `).join('');
 }
 
-// ── Info popup ──
 function openInfo(cat) {
   _currentHref = cat.href;
   document.getElementById('info-title').textContent = cat.name;
@@ -457,13 +455,10 @@ function openInfo(cat) {
   document.getElementById('info-admin-name').textContent = cat.admin_name;
   document.getElementById('info-admin-email').textContent = cat.admin_email;
   document.getElementById('info-head-dept').textContent = cat.head_dept;
-  const headEmails = cat.head_dept.split(',').map(d => ACCESS_HEAD_EMAILS[d.trim()] || d.trim()).join(', ');
-  document.getElementById('info-head-email').textContent = headEmails;
+  document.getElementById('info-head-email').textContent = cat.head_email;
   document.getElementById('info-owner-roles').textContent = cat.owners;
-  const ownerEmails = cat.owners.split(',').map(r => DATA_OWNER_EMAILS[r.trim()] || r.trim()).join(', ');
-  document.getElementById('info-owner-email').textContent = ownerEmails;
-  const modal = document.getElementById('info-modal');
-  modal.classList.add('open');
+  document.getElementById('info-owner-emails').textContent = cat.owner_emails;
+  document.getElementById('info-modal').classList.add('open');
 }
 function closeInfo() {
   document.getElementById('info-modal').classList.remove('open');
@@ -473,11 +468,10 @@ function openFolder() {
   if (_currentHref) window.open(_currentHref, '_blank');
   closeInfo();
 }
-document.getElementById('info-modal').addEventListener('click', function(e) {
-  if (e.target === this) closeInfo();
+document.getElementById('info-modal').addEventListener('click', e => {
+  if (e.target === document.getElementById('info-modal')) closeInfo();
 });
 
-// ── MSAL ──
 async function signIn() {
   try {
     if (window !== window.top) { window.open(window.location.href,'_blank'); return; }
@@ -487,10 +481,8 @@ async function signIn() {
   } catch(e) { showLoginError(e.message); }
 }
 function signOut() { msal_g.logoutRedirect(); }
-function showLoginError(msg) {
-  const el = document.getElementById('login-err');
-  el.textContent = msg; el.style.display = 'block';
-}
+function showLoginError(msg) { const el=document.getElementById('login-err'); el.textContent=msg; el.style.display='block'; }
+
 async function boot(account) {
   if (!isAllowed(account)) {
     document.getElementById('no-auth-modal').style.display = 'flex';
@@ -505,12 +497,12 @@ window.addEventListener('load', async () => {
   renderCards();
   const btn = document.getElementById('btn-login');
   const fallback = setTimeout(() => {
-    if (btn && btn.disabled) { btn.disabled = false; btn.textContent = 'Hyosung M365 계정으로 로그인'; }
+    if (btn && btn.disabled) { btn.disabled=false; btn.textContent='Hyosung M365 계정으로 로그인'; }
   }, 5000);
   try {
     msal_g = new msal.PublicClientApplication({
-      auth: { clientId: CLIENT_ID, authority: 'https://login.microsoftonline.com/' + TENANT_ID, redirectUri: window.location.origin + window.location.pathname },
-      cache: { cacheLocation: 'localStorage', storeAuthStateInCookie: false }
+      auth: { clientId:CLIENT_ID, authority:'https://login.microsoftonline.com/'+TENANT_ID, redirectUri:window.location.origin+window.location.pathname },
+      cache: { cacheLocation:'localStorage', storeAuthStateInCookie:false }
     });
     await msal_g.initialize();
     clearTimeout(fallback);
@@ -518,11 +510,11 @@ window.addEventListener('load', async () => {
     if (resp) { msal_g.setActiveAccount(resp.account); await boot(resp.account); return; }
     const accounts = msal_g.getAllAccounts();
     if (accounts.length) { msal_g.setActiveAccount(accounts[0]); await boot(accounts[0]); return; }
-    if (btn) { btn.disabled = false; btn.textContent = 'Hyosung M365 계정으로 로그인'; }
+    if (btn) { btn.disabled=false; btn.textContent='Hyosung M365 계정으로 로그인'; }
   } catch(e) {
     clearTimeout(fallback);
-    if (btn) { btn.disabled = false; btn.textContent = 'Hyosung M365 계정으로 로그인'; }
-    console.warn('MSAL init error:', e.message);
+    if (btn) { btn.disabled=false; btn.textContent='Hyosung M365 계정으로 로그인'; }
+    console.warn('MSAL init error:',e.message);
   }
 });
 </script>
