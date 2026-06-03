@@ -88,7 +88,7 @@ footer{background:#fff;border-top:1px solid #e9ecef;padding:16px 32px;text-align
       <div class="logo-mark">STK</div>
       <div>
         <div class="logo-text">KR Intranet Archive</div>
-        <div class="logo-sub">KRIntranet-OCR-PDF-Backup_2026</div>
+        <div class="logo-sub">문의: <a id="contact-link" href="" style="color:#aaa;text-decoration:none;font-family:'DM Mono',monospace;"></a></div>
       </div>
     </div>
     <div class="header-right">
@@ -133,7 +133,7 @@ footer{background:#fff;border-top:1px solid #e9ecef;padding:16px 32px;text-align
       <div class="info-val" id="info-owner-roles"></div>
       <div class="info-email" id="info-owner-emails"></div>
     </div>
-    <button class="info-open-btn" onclick="openFolder()">SharePoint 폴더 열기 ↗</button>
+    <button class="info-open-btn" onclick="openFolder()">백업 데이터 열기 ↗</button>
   </div>
 </div>
 
@@ -159,9 +159,10 @@ footer{background:#fff;border-top:1px solid #e9ecef;padding:16px 32px;text-align
 </div>
 
 <script>
-const CLIENT_ID = '432976c2-b43a-492e-8213-ece505fa1f51';
-const TENANT_ID = '19cab1f5-21f4-44df-8ac6-96d6ca595203';
-const SCOPES    = ['User.Read'];
+const CLIENT_ID   = '432976c2-b43a-492e-8213-ece505fa1f51';
+const TENANT_ID   = '19cab1f5-21f4-44df-8ac6-96d6ca595203';
+const SCOPES      = ['User.Read'];
+const KRI_CONTACT = 'stk_it@hyosung.com'; // KRI_CONTACT from system_config
 const CATEGORIES = [
   {
     "no": "01",
@@ -505,6 +506,9 @@ async function boot(account) {
 
 window.addEventListener('load', async () => {
   renderCards();
+  // Set contact email from KRI_CONTACT
+  const cl = document.getElementById('contact-link');
+  if (cl) { cl.textContent = KRI_CONTACT; cl.href = 'mailto:' + KRI_CONTACT; }
   const btn = document.getElementById('btn-login');
   const fallback = setTimeout(() => {
     if (btn && btn.disabled) { btn.disabled=false; btn.textContent='Hyosung M365 계정으로 로그인'; }
