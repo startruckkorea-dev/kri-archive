@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>STK — KR Intranet Archive</title>
 <script src="https://cdn.jsdelivr.net/npm/@azure/msal-browser@3.28.0/lib/msal-browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',sans-serif;background:#f3f2f1;color:#323130;min-height:100vh}
@@ -185,22 +186,25 @@ footer{background:#f3f2f1;border-top:none;padding:20px 24px;text-align:center;fo
 </div>
 
 <script>
-const CLIENT_ID   = '432976c2-b43a-492e-8213-ece505fa1f51';
-const TENANT_ID   = '19cab1f5-21f4-44df-8ac6-96d6ca595203';
-const SCOPES      = ['User.Read'];
-const KRI_CONTACT = 'stk_it@hyosung.com'; // KRI_CONTACT from system_config
+const CLIENT_ID  = '432976c2-b43a-492e-8213-ece505fa1f51';
+const TENANT_ID  = '19cab1f5-21f4-44df-8ac6-96d6ca595203';
+const SCOPES     = ['User.Read', 'Sites.Read.All', 'Files.Read.All'];
+const GRAPH      = 'https://graph.microsoft.com/v1.0';
+const SITE_PATH  = 'startruckkorea.sharepoint.com:/sites/STK-DB:';
 
-// STK_Backup_ITSD folder — same access control structure as U-Business categories
-// Reads from same config values: KRI_ADMIN_1, KRI_CFO, KRI_RD, KRI_CEO
+// ── fallback 기본값 (config 로드 실패 시) ──
+let KRI_CONTACT = 'stk_it@hyosung.com';
+
+// STK_Backup_ITSD — config 로드 후 동적으로 채워짐
 const ITSD_FOLDER = {
   no: '—',
   name: 'STK Backup ITSD',
   admin_name: 'IT System Account',
-  admin_email: 'stk_it@hyosung.com',         // KRI_IT
+  admin_email: 'stk_it@hyosung.com',
   head_dept: 'CFO',
-  head_email: 'martin.s.schindele@hyosung.com', // KRI_CFO
+  head_email: '',
   owners: 'RD, CEO',
-  owner_emails: 'keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com', // KRI_RD, KRI_CEO
+  owner_emails: '',
   href: 'https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%5FITSD&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx',
 };
 const CATEGORIES = [
@@ -469,14 +473,126 @@ const CATEGORIES = [
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FWarranty%20Part%20Use&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   }
 ];
-const ALLOWED_EMAILS = ["jimmy.lee@hyosung.com", "robin.joo@hyosung.com", "alice.kim@hyosung.com", "eunjung.seo@hyosung.com", "hye-jin.yun@hyosung.com", "dongho.kim@hyosung.com", "jihyun.ma@hyosung.com", "hyunju.gong@hyosung.com", "soo-in.ko@hyosung.com", "hyeongsu.park@hyosung.com", "martin.s.schindele@hyosung.com", "donghyun.oh@hyosung.com", "chiseong.won@hyosung.com", "keuntae.dong@hyosung.com", "antonio.randazzo@hyosung.com"];
+// ── config 로드 후 채워지는 값들 ──
+let ALLOWED_EMAILS = [];
+let KRI_ADMINS     = [];
 
-// KRI_ADMIN_1~3 — 모든 카테고리 접근 허용 (super admin)
-const KRI_ADMINS = [
-  'jimmy.lee@hyosung.com',       // KRI_ADMIN_1
-  'keuntae.dong@hyosung.com',    // KRI_ADMIN_2
-  'antonio.randazzo@hyosung.com', // KRI_ADMIN_3
-];
+// ── GW 동일 패턴: system_config_final.xlsx에서 KRI_* 키 읽기 ──
+let _sysConfig = null;
+let siteId = null;
+
+async function token() {
+  try {
+    return (await msal_g.acquireTokenSilent({ scopes: SCOPES, account: msal_g.getActiveAccount() })).accessToken;
+  } catch(e) {
+    if (e.name === 'InteractionRequiredAuthError' || (e.errorCode && e.errorCode.includes('interaction_required'))) {
+      await msal_g.acquireTokenRedirect({ scopes: SCOPES }); return null;
+    }
+    throw e;
+  }
+}
+async function api(path) {
+  const t = await token();
+  const res = await fetch((path.startsWith('http') ? path : GRAPH + path), { headers: { Authorization: 'Bearer ' + t } });
+  if (!res.ok) throw new Error('API ' + path + ' → ' + res.status);
+  return res.json();
+}
+
+async function loadSystemConfig() {
+  if (_sysConfig) return _sysConfig;
+  try {
+    const drivesRes = await api('/sites/' + siteId + '/drives');
+    let docDrive = (drivesRes.value || []).find(d => ['Documents','문서','Shared Documents'].includes(d.name));
+    if (!docDrive && drivesRes.value && drivesRes.value.length) docDrive = drivesRes.value[0];
+    const t = await token();
+    const res = await fetch(GRAPH + '/drives/' + docDrive.id + '/root:/system_config_final.xlsx:/content',
+      { headers: { Authorization: 'Bearer ' + t } });
+    if (!res.ok) throw new Error('system_config_final.xlsx not found');
+    const buf = await res.arrayBuffer();
+    const wb = XLSX.read(buf, { type: 'array' });
+    const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1 });
+    const cfg = {};
+    rows.forEach(row => {
+      const key = (row[0] || '').toString().trim();
+      if (!key || key.startsWith('[') || key === '설정 키 (KEY)' || key.startsWith('■') || key.startsWith('※')) return;
+      cfg[key] = { name: (row[1] || '').toString().trim(), email: (row[2] || '').toString().trim() };
+    });
+    _sysConfig = cfg;
+    console.log('[KRI Config] Loaded:', Object.keys(cfg).filter(k => k.startsWith('KRI_')).length, 'KRI entries');
+    return cfg;
+  } catch(e) {
+    console.warn('[KRI Config] 로드 실패, 기본값 사용:', e.message);
+    return null;
+  }
+}
+function cfgVal(cfg, key, defaultVal) {
+  return (cfg && cfg[key] && cfg[key].email) ? cfg[key].email : defaultVal;
+}
+function cfgName(cfg, key, defaultVal) {
+  return (cfg && cfg[key] && cfg[key].name) ? cfg[key].name : defaultVal;
+}
+function cfgAdminEmails(cfg, prefix) {
+  // KRI_ADMIN_1, KRI_ADMIN_2, ... 자동 확장
+  const emails = [];
+  let n = 1;
+  while (cfg && cfg[prefix + n]) { emails.push(cfg[prefix + n].email); n++; }
+  return emails.filter(Boolean);
+}
+
+async function applyConfig(cfg) {
+  if (!cfg) return;
+
+  // KRI_CONTACT → 헤더 문의 이메일
+  const contact = cfgVal(cfg, 'KRI_CONTACT', KRI_CONTACT);
+  KRI_CONTACT = contact;
+  const cl = document.getElementById('contact-link');
+  if (cl) { cl.textContent = contact; cl.href = 'mailto:' + contact; }
+
+  // KRI_ADMIN_1~N → 슈퍼 어드민 (전체 접근)
+  KRI_ADMINS = cfgAdminEmails(cfg, 'KRI_ADMIN_');
+
+  // ALLOWED_EMAILS = 모든 BU Admin + Access Head + Data Owner
+  const buAdmins = [
+    cfgVal(cfg,'KRI_IT','stk_it@hyosung.com'),
+    cfgVal(cfg,'KRI_HR',''),
+    cfgVal(cfg,'KRI_SALES',''),
+    cfgVal(cfg,'KRI_CSP',''),
+    cfgVal(cfg,'KRI_COMPLIANCE',''),
+  ];
+  // BU Admin 개별 (CATEGORIES에서 수집)
+  const catAdmins = CATEGORIES.map(c => c.admin_email.split(/[;,]/).map(e => e.trim())).flat();
+  const heads     = [cfgVal(cfg,'KRI_CFO',''), cfgVal(cfg,'KRI_HR',''), cfgVal(cfg,'KRI_SALES',''), cfgVal(cfg,'KRI_CSP',''), cfgVal(cfg,'KRI_COMPLIANCE','')];
+  const owners    = [cfgVal(cfg,'KRI_RD',''), cfgVal(cfg,'KRI_CEO','')];
+  ALLOWED_EMAILS  = [...new Set([...KRI_ADMINS, ...buAdmins, ...catAdmins, ...heads, ...owners])].filter(Boolean);
+
+  // ITSD_FOLDER 동적 채우기
+  ITSD_FOLDER.admin_email  = cfgVal(cfg, 'KRI_IT',  'stk_it@hyosung.com');
+  ITSD_FOLDER.admin_name   = cfgName(cfg, 'KRI_IT', 'IT System Account');
+  ITSD_FOLDER.head_email   = cfgVal(cfg, 'KRI_CFO', '');
+  ITSD_FOLDER.owner_emails = [cfgVal(cfg,'KRI_RD',''), cfgVal(cfg,'KRI_CEO','')].filter(Boolean).join(', ');
+
+  // CATEGORIES 중 Authorization Request(01) admin도 KRI_IT로
+  const authReq = CATEGORIES.find(c => c.no === '01');
+  if (authReq) {
+    authReq.admin_email = cfgVal(cfg, 'KRI_IT', authReq.admin_email);
+    authReq.admin_name  = cfgName(cfg, 'KRI_IT', authReq.admin_name);
+  }
+
+  // 모든 카테고리의 Access Head / Data Owner 이메일 동적 갱신
+  const headMap = {
+    'CFO': cfgVal(cfg,'KRI_CFO',''), 'HR': cfgVal(cfg,'KRI_HR',''),
+    'Sales': cfgVal(cfg,'KRI_SALES',''), 'CSP': cfgVal(cfg,'KRI_CSP',''),
+    'Compliance': cfgVal(cfg,'KRI_COMPLIANCE',''),
+  };
+  const rdEmail  = cfgVal(cfg, 'KRI_RD',  '');
+  const ceoEmail = cfgVal(cfg, 'KRI_CEO', '');
+  CATEGORIES.forEach(c => {
+    if (headMap[c.head_dept]) c.head_email = headMap[c.head_dept];
+    c.owner_emails = [rdEmail, ceoEmail].filter(Boolean).join(', ');
+  });
+
+  console.log('[KRI Config] Applied. KRI_ADMINS:', KRI_ADMINS.length, 'ALLOWED:', ALLOWED_EMAILS.length);
+}
 
 let msal_g = null, _currentHref = null, _currentCat = null, user = null;
 
@@ -548,6 +664,20 @@ function showLoginError(msg) { const el=document.getElementById('login-err'); el
 
 async function boot(account) {
   user = account;
+  // 이메일 정규화
+  try {
+    const me = await api('/me?$select=mail,userPrincipalName');
+    user.email = (me.mail || me.userPrincipalName || account.username).toLowerCase();
+  } catch(e) { user.email = (account.username || '').toLowerCase(); }
+
+  // siteId 취득 후 config 로드
+  try {
+    const site = await api('/sites/' + SITE_PATH);
+    siteId = site.id;
+    const cfg = await loadSystemConfig();
+    await applyConfig(cfg);
+  } catch(e) { console.warn('[KRI] config 로드 실패:', e.message); }
+
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
   document.getElementById('user-name').textContent = account.name || account.username;
