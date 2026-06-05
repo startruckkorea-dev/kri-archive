@@ -579,6 +579,19 @@ async function applyConfig(cfg) {
     authReq.admin_name  = cfgName(cfg, 'KRI_IT', authReq.admin_name);
   }
 
+  // Master Data Management(13) BU Admin → KRI_ACC_1~3 동적 로드
+  const masterData = CATEGORIES.find(c => c.no === '13');
+  if (masterData) {
+    const accEmails = cfgAdminEmails(cfg, 'KRI_ACC_');
+    const accNames  = [];
+    let n = 1;
+    while (cfg && cfg['KRI_ACC_' + n]) { accNames.push(cfg['KRI_ACC_' + n].name); n++; }
+    if (accEmails.length) {
+      masterData.admin_email = accEmails.join('; ');
+      masterData.admin_name  = accNames.join(' / ');
+    }
+  }
+
   // 모든 카테고리의 Access Head / Data Owner 이메일 동적 갱신
   const headMap = {
     'CFO': cfgVal(cfg,'KRI_CFO',''), 'HR': cfgVal(cfg,'KRI_HR',''),
