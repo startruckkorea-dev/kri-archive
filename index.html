@@ -594,15 +594,16 @@ async function applyConfig(cfg) {
 
   // 카테고리별 BU Admin config 키 매핑
   const buAdminMap = [
-    { nos: ['02','04','05','12','18'], key: 'KRI_HR' },
-    { nos: ['03','07'],               key: 'KRI_SALSE_BU' },
-    { nos: ['06','11'],               key: 'KRI_COMPLIANCE' },
+    { nos: ['04','05','12','18'],             key: 'KRI_HR' },
+    { nos: ['02'],                            key: 'KRI_GA_BU' },
+    { nos: ['03','07'],                       key: 'KRI_SALSE_BU' },
+    { nos: ['06','11'],                       key: 'KRI_COMPLIANCE' },
     { nos: ['08','10','14','15','19','20','21'], key: 'KRI_GA_BU' },
-    { nos: ['09'],                    key: 'KRI_GW_BU' },
-    { nos: ['16'],                    key: 'KRI_PARTS_BU' },
-    { nos: ['17'],                    key: null, keys: ['KRI_ACC_1','KRI_ACC_2'] },
-    { nos: ['23'],                    key: null, keys: ['KRI_ACC_2','KRI_ACC_3'] },
-    { nos: ['22','24'],               key: 'KRI_TS_BU' },
+    { nos: ['09'],                            key: 'KRI_GW_BU' },
+    { nos: ['16'],                            key: 'KRI_PARTS_BU' },
+    { nos: ['17'],                            key: null, keys: ['KRI_ACC_3'] },
+    { nos: ['23'],                            key: null, keys: ['KRI_ACC_2','KRI_ACC_3'] },
+    { nos: ['22','24'],                       key: 'KRI_TS_BU' },
   ];
   buAdminMap.forEach(({ nos, key, keys }) => {
     nos.forEach(no => {
