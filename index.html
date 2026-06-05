@@ -592,6 +592,32 @@ async function applyConfig(cfg) {
     }
   }
 
+  // 카테고리별 BU Admin config 키 매핑
+  const buAdminMap = [
+    { nos: ['02','04','05','12','18'], key: 'KRI_HR' },
+    { nos: ['03','07'],               key: 'KRI_SALSE_BU' },
+    { nos: ['06','11'],               key: 'KRI_COMPLIANCE' },
+    { nos: ['08','10','14','15','19','20','21'], key: 'KRI_GA_BU' },
+    { nos: ['09'],                    key: 'KRI_GW_BU' },
+    { nos: ['16'],                    key: 'KRI_PARTS_BU' },
+    { nos: ['17','23'],               key: null, keys: ['KRI_ACC_1','KRI_ACC_2'] },
+    { nos: ['22','24'],               key: 'KRI_TS_BU' },
+  ];
+  buAdminMap.forEach(({ nos, key, keys }) => {
+    nos.forEach(no => {
+      const cat = CATEGORIES.find(c => c.no === no);
+      if (!cat) return;
+      if (key) {
+        cat.admin_email = cfgVal(cfg, key, cat.admin_email);
+        cat.admin_name  = cfgName(cfg, key, cat.admin_name);
+      } else if (keys) {
+        const emails = keys.map(k => cfgVal(cfg, k, '')).filter(Boolean);
+        const names  = keys.map(k => cfgName(cfg, k, '')).filter(Boolean);
+        if (emails.length) { cat.admin_email = emails.join('; '); cat.admin_name = names.join(' / '); }
+      }
+    });
+  });
+
   // 모든 카테고리의 Access Head / Data Owner 이메일 동적 갱신
   const headMap = {
     'CFO': cfgVal(cfg,'KRI_CFO',''), 'HR': cfgVal(cfg,'KRI_HR',''),
