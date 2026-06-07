@@ -549,8 +549,9 @@ async function applyConfig(cfg) {
   const cl = document.getElementById('contact-link');
   if (cl) { cl.textContent = contact; cl.href = 'mailto:' + contact; }
 
-  // KRI_ADMIN_1~N → 슈퍼 어드민 (전체 접근)
-  KRI_ADMINS = cfgAdminEmails(cfg, 'KRI_ADMIN_');
+  // KRI_ADMIN_1만 슈퍼 어드민 (KRI_ADMIN_2, 3 제외 — 2026.06.26 오픈 전까지)
+  const admin1Email = cfg && cfg['KRI_ADMIN_1'] ? cfg['KRI_ADMIN_1'].email : '';
+  KRI_ADMINS = admin1Email ? [admin1Email] : [];
 
   // ALLOWED_EMAILS = 모든 BU Admin + Access Head + Data Owner
   const buAdmins = [
