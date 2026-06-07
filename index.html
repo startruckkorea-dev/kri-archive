@@ -726,6 +726,32 @@ async function boot(account) {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
   document.getElementById('user-name').textContent = (account.name || account.username) + ' (' + (user.email || account.username) + ')';
+
+  // KRI_ADMIN_1 이외 계정은 오픈 전 팝업 표시 후 앱 내용 숨김
+  const isAdmin1 = KRI_ADMINS.map(e => e.toLowerCase()).includes(user.email);
+  if (!isAdmin1) {
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('login-screen').style.display = 'none';
+    // 오픈 예정 안내 화면 표시
+    let pre = document.getElementById('kri-preopn-screen');
+    if (!pre) {
+      pre = document.createElement('div');
+      pre.id = 'kri-preopn-screen';
+      pre.style.cssText = 'position:fixed;inset:0;background:linear-gradient(145deg,#0F2744,#0078D4);display:flex;align-items:center;justify-content:center;z-index:9999;font-family:Segoe UI,sans-serif;';
+      pre.innerHTML = `
+        <div style="background:#fff;border-radius:16px;padding:48px 40px;max-width:420px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3);">
+          <div style="font-size:3rem;margin-bottom:16px;">📁</div>
+          <div style="font-size:1.3rem;font-weight:700;color:#0F2744;margin-bottom:12px;">KR Intranet Archive</div>
+          <div style="font-size:1rem;color:#0078D4;font-weight:600;margin-bottom:20px;">서비스 오픈 예정</div>
+          <div style="background:#EBF3FB;border-radius:10px;padding:16px 20px;margin-bottom:24px;color:#323130;font-size:.95rem;line-height:1.7;">
+            <strong>2026년 6월 26일 오후 1시</strong>부터<br>접근이 가능합니다.
+          </div>
+          <div style="font-size:.82rem;color:#605E5C;margin-bottom:24px;">문의: <a href="mailto:stk_it@hyosung.com" style="color:#0078D4;">stk_it@hyosung.com</a></div>
+          <button onclick="document.getElementById('kri-preopn-screen').remove();msal_g.logoutPopup();" style="background:#0078D4;color:#fff;border:none;border-radius:8px;padding:10px 28px;font-size:.9rem;font-weight:600;cursor:pointer;font-family:inherit;">로그아웃</button>
+        </div>`;
+      document.body.appendChild(pre);
+    }
+  }
 }
 
 window.addEventListener('load', async () => {
