@@ -161,6 +161,11 @@ footer{background:#f3f2f1;border-top:none;padding:20px 24px;text-align:center;fo
       <div class="info-val" id="info-owner-roles"></div>
       <div class="info-email" id="info-owner-emails"></div>
     </div>
+    <div class="info-row">
+      <div class="info-lbl">Retention Period</div>
+      <div class="info-val" id="info-retention-label">File / Data</div>
+      <div class="info-email" id="info-retention-value"></div>
+    </div>
     <button class="info-open-btn" onclick="openFolder()">백업 데이터 열기 ↗</button>
   </div>
 </div>
@@ -218,6 +223,8 @@ const CATEGORIES = [
     "head_email": "martin.s.schindele@hyosung.com",
     "owners": "RD, CEO",
     "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
+    "retention_file": "-",
+    "retention_data": "-",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FAuthorization%20Request&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -229,6 +236,8 @@ const CATEGORIES = [
     "head_email": "robin.joo@hyosung.com",
     "owners": "RD, CEO",
     "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
+    "retention_file": "3개월",
+    "retention_data": "3개월",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FBusiness%20Card%20Order&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -240,6 +249,8 @@ const CATEGORIES = [
     "head_email": "donghyun.oh@hyosung.com",
     "owners": "RD, CEO",
     "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
+    "retention_file": "8년",
+    "retention_data": "8년",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FBusiness%20Partner%20Sales&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -251,6 +262,8 @@ const CATEGORIES = [
     "head_email": "robin.joo@hyosung.com",
     "owners": "RD, CEO",
     "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
+    "retention_file": "-",
+    "retention_data": "-",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FCertificate%20of%20Employment&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -262,6 +275,8 @@ const CATEGORIES = [
     "head_email": "robin.joo@hyosung.com",
     "owners": "RD, CEO",
     "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
+    "retention_file": "-",
+    "retention_data": "-",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FCertificate%20of%20Income&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -273,6 +288,8 @@ const CATEGORIES = [
     "head_email": "eunjung.seo@hyosung.com",
     "owners": "RD, CEO",
     "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
+    "retention_file": "5년",
+    "retention_data": "5년",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FCompliance%20Consulation%20Desk&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -284,6 +301,8 @@ const CATEGORIES = [
     "head_email": "donghyun.oh@hyosung.com",
     "owners": "RD, CEO",
     "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
+    "retention_file": "-",
+    "retention_data": "-",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FCustomer%20Master%20Management&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -295,6 +314,8 @@ const CATEGORIES = [
     "head_email": "martin.s.schindele@hyosung.com",
     "owners": "RD, CEO",
     "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
+    "retention_file": "5년",
+    "retention_data": "5년",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FDemo%20Car%20Application&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -306,6 +327,8 @@ const CATEGORIES = [
     "head_email": "chiseong.won@hyosung.com",
     "owners": "RD, CEO",
     "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
+    "retention_file": "6개월",
+    "retention_data": "5년",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FGoodwill%5FTech%2DCare%20Use&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -317,6 +340,8 @@ const CATEGORIES = [
     "head_email": "martin.s.schindele@hyosung.com",
     "owners": "RD, CEO",
     "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
+    "retention_file": "-",
+    "retention_data": "-",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FID%20Card%20Order&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -328,6 +353,8 @@ const CATEGORIES = [
     "head_email": "eunjung.seo@hyosung.com",
     "owners": "RD, CEO",
     "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
+    "retention_file": "10년",
+    "retention_data": "10년",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FLegal%20Help%20Desk&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -339,6 +366,8 @@ const CATEGORIES = [
     "head_email": "robin.joo@hyosung.com",
     "owners": "RD, CEO",
     "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
+    "retention_file": "-",
+    "retention_data": "-",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FManpower%20Requisition&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -350,6 +379,8 @@ const CATEGORIES = [
     "head_email": "martin.s.schindele@hyosung.com",
     "owners": "RD, CEO",
     "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
+    "retention_file": "10년",
+    "retention_data": "10년",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FMaster%20Data%20Management&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -361,6 +392,8 @@ const CATEGORIES = [
     "head_email": "martin.s.schindele@hyosung.com",
     "owners": "RD, CEO",
     "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
+    "retention_file": "1년",
+    "retention_data": "1년",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FMobility%20Car%20Application&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -372,6 +405,8 @@ const CATEGORIES = [
     "head_email": "martin.s.schindele@hyosung.com",
     "owners": "RD, CEO",
     "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
+    "retention_file": "2년",
+    "retention_data": "2년",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FOffice%20Administration&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -383,6 +418,8 @@ const CATEGORIES = [
     "head_email": "chiseong.won@hyosung.com",
     "owners": "RD, CEO",
     "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
+    "retention_file": "-",
+    "retention_data": "-",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FParts%20Cannibalizing&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -394,6 +431,8 @@ const CATEGORIES = [
     "head_email": "martin.s.schindele@hyosung.com",
     "owners": "RD, CEO",
     "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
+    "retention_file": "-",
+    "retention_data": "-",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FPolicy%20Deviation%20Report&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -405,6 +444,8 @@ const CATEGORIES = [
     "head_email": "robin.joo@hyosung.com",
     "owners": "RD, CEO",
     "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
+    "retention_file": "5년",
+    "retention_data": "5년",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FProbation%20Confirmation&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -416,6 +457,8 @@ const CATEGORIES = [
     "head_email": "martin.s.schindele@hyosung.com",
     "owners": "RD, CEO",
     "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
+    "retention_file": "-",
+    "retention_data": "-",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FRepair%20Report&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -427,6 +470,8 @@ const CATEGORIES = [
     "head_email": "martin.s.schindele@hyosung.com",
     "owners": "RD, CEO",
     "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
+    "retention_file": "3개월",
+    "retention_data": "3개월",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FStationery%20Purchase%20Order&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -438,6 +483,8 @@ const CATEGORIES = [
     "head_email": "martin.s.schindele@hyosung.com",
     "owners": "RD, CEO",
     "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
+    "retention_file": "5년",
+    "retention_data": "5년",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FSTK%20Contract%20Checklist&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -449,6 +496,8 @@ const CATEGORIES = [
     "head_email": "chiseong.won@hyosung.com",
     "owners": "RD, CEO",
     "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
+    "retention_file": "3년",
+    "retention_data": "3년",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FTechnical%20Service%20Proposal%20Approval&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -460,6 +509,8 @@ const CATEGORIES = [
     "head_email": "martin.s.schindele@hyosung.com",
     "owners": "RD, CEO",
     "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
+    "retention_file": "-",
+    "retention_data": "-",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FVendor%20Master%20Management&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   },
   {
@@ -471,6 +522,8 @@ const CATEGORIES = [
     "head_email": "chiseong.won@hyosung.com",
     "owners": "RD, CEO",
     "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
+    "retention_file": "6개월",
+    "retention_data": "5년",
     "href": "https://ehyosung.sharepoint.com/sites/STK-NAS/STK/Forms/AllItems.aspx?id=%2Fsites%2FSTK%2DNAS%2FSTK%2FHS%5FSTK%2DShared%2F5%2E%20Project%2FKRIntranet%2DOCR%2DPDF%2DBackup%5F2026%2FSTK%5FBackup%2FWarranty%20Part%20Use&viewid=bb582c05%2Dfab1%2D459c%2D8e5b%2D6704df78e1e0&newTargetListUrl=%2Fsites%2FSTK%2DNAS%2FSTK&viewpath=%2Fsites%2FSTK%2DNAS%2FSTK%2FForms%2FAllItems%2Easpx"
   }
 ];
@@ -681,6 +734,9 @@ function openInfo(no) {
   document.getElementById('info-head-email').textContent = cat.head_email;
   document.getElementById('info-owner-roles').textContent = cat.owners;
   document.getElementById('info-owner-emails').textContent = cat.owner_emails;
+  const rf = cat.retention_file || '-', rd = cat.retention_data || '-';
+  document.getElementById('info-retention-value').textContent =
+    (rf === rd) ? rf : `File: ${rf} / Data: ${rd}`;
   document.getElementById('info-modal').classList.add('open');
 }
 function closeInfo() {
