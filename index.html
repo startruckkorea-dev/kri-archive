@@ -302,7 +302,7 @@ const CATEGORIES = [
     "name": "Goodwill Tech-Care Use",
     "admin_name": "dongho.kim",
     "admin_email": "dongho.kim@hyosung.com",
-    "head_dept": "CSP",
+    "head_dept": "CSP, Sales",
     "head_email": "chiseong.won@hyosung.com",
     "owners": "RD, CEO",
     "owner_emails": "keuntae.dong@hyosung.com, antonio.randazzo@hyosung.com",
@@ -600,7 +600,7 @@ async function applyConfig(cfg) {
     { nos: ['03','07'],                       key: 'KRI_SALSE_BU' },
     { nos: ['06','11'],                       key: 'KRI_COMPLIANCE' },
     { nos: ['08','10','14','15','19','20','21'], key: 'KRI_GA_BU' },
-    { nos: ['09'],                            key: 'KRI_GW_BU' },
+    { nos: ['09'],                            key: null, keys: ['KRI_GW_BU','KRI_GW-Sales_BU'] },
     { nos: ['16'],                            key: 'KRI_PARTS_BU' },
     { nos: ['17'],                            key: null, keys: ['KRI_ACC_3'] },
     { nos: ['23'],                            key: null, keys: ['KRI_ACC_2','KRI_ACC_3'] },
@@ -630,7 +630,13 @@ async function applyConfig(cfg) {
   const rdEmail  = cfgVal(cfg, 'KRI_RD',  '');
   const ceoEmail = cfgVal(cfg, 'KRI_CEO', '');
   CATEGORIES.forEach(c => {
-    if (headMap[c.head_dept]) c.head_email = headMap[c.head_dept];
+    const depts = (c.head_dept || '').split(',').map(d => d.trim()).filter(Boolean);
+    if (depts.length > 1) {
+      const emails = depts.map(d => headMap[d]).filter(Boolean);
+      if (emails.length) c.head_email = emails.join(', ');
+    } else if (depts.length === 1 && headMap[depts[0]]) {
+      c.head_email = headMap[depts[0]];
+    }
     c.owner_emails = [rdEmail, ceoEmail].filter(Boolean).join(', ');
   });
 
