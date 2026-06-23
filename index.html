@@ -746,11 +746,6 @@ function closeInfo() {
 }
 function openFolder() {
   if (!_currentHref) return;
-  if (_currentCat && user && !isCatAllowed(_currentCat, user)) {
-    closeInfo();
-    document.getElementById('folder-deny-modal').style.display = 'flex';
-    return;
-  }
   window.open(_currentHref, '_blank');
   closeInfo();
 }
