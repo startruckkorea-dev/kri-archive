@@ -784,8 +784,6 @@ async function boot(account) {
   document.getElementById('app').style.display = 'block';
   document.getElementById('user-name').textContent = (account.name || account.username) + ' (' + (user.email || account.username) + ')';
 
-  // KRI_ADMIN_1 이외 계정은 오픈 전 팝업 표시 후 앱 내용 숨김
-    }
 }
 
 window.addEventListener('load', async () => {
