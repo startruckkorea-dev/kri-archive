@@ -756,9 +756,7 @@ document.getElementById('info-modal').addEventListener('click', e => {
 async function signIn() {
   try {
     if (window !== window.top) { window.open(window.location.href,'_blank'); return; }
-    const r = await msal_g.loginPopup({scopes:SCOPES});
-    msal_g.setActiveAccount(r.account);
-    await boot(r.account);
+    await msal_g.loginRedirect({scopes:SCOPES}); // 팝업 대신 리다이렉트 — 모바일 홈화면 바로가기 등에서 팝업 미지원 문제 회피 (handleRedirectPromise가 복귀 후 이어받음)
   } catch(e) { showLoginError(e.message); }
 }
 function signOut() { msal_g.logoutRedirect(); }
