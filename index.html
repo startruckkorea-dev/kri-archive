@@ -106,18 +106,26 @@ footer{background:#f3f2f1;border-top:none;padding:20px 24px;text-align:center;fo
 </div>
 
 <div id="app">
-  <header>
-    <div class="logo">
-      <div class="logo-mark" style="font-size:15px;">📁</div>
-      <div>
-        <div class="logo-text">KR Intranet Archive</div>
-        <div class="logo-sub">문의: <a id="contact-link" href="" style="color:#0078d4;text-decoration:none;"></a></div>
-      </div>
+  <!-- 11-18 머리 줄 시안 5(슬레이트 + 보존 표시) — 사용자 선택. 「돌아가기」(11-18 닫힌 옛 APS) → 「HS APS」 · 긴 이름(메일) · 로그아웃 단추 → 사진 + 짧은 이름 ▾ 계정 메뉴 -->
+  <header class="kh">
+    <div class="kh-brand">
+      <div class="kh-mark"><svg class="kh-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8v13H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg></div>
+      <div class="kh-txt"><div class="kh-ttl">KR Intranet Archive</div><div class="kh-sub">STK Document Archive Portal</div></div>
+      <span class="kh-keep" title="U-Business 인트라넷 결재 시스템 백업 — 읽기 전용 보존 자료 (Data Integrity Baseline Date: 2026.05.30)"><svg class="kh-i" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span>읽기 전용 보존 자료 · 기준일 2026.05.30</span></span>
     </div>
-    <div class="header-right">
-      <span id="user-name"></span>
-      <a href="https://aps.startruckkorea.com/" target="_self" style="text-decoration:none;display:inline-flex;align-items:center;gap:7px;background:#0078d4;color:#fff;border-radius:6px;padding:7px 14px;font-size:.78rem;font-weight:600;font-family:'Segoe UI',sans-serif;letter-spacing:-.2px;box-shadow:0 1px 4px rgba(0,120,212,.25);transition:background .15s" onmouseover="this.style.background='#106ebe'" onmouseout="this.style.background='#0078d4'"><span style="font-size:1rem;line-height:1">📬</span><span>돌아가기</span></a>
-      <button class="btn-logout" onclick="signOut()">로그아웃</button>
+    <div class="kh-right">
+      <a class="kh-ic" id="contact-link" href="mailto:stk_it@hyosung.com" title="문의 stk_it@hyosung.com" aria-label="문의 메일 stk_it@hyosung.com"><svg class="kh-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg></a>
+      <a class="kh-tl" href="https://hs-aps.startruckkorea.com/" target="_self" title="HS APS 통합 결재함으로"><svg class="kh-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span>HS APS</span></a>
+      <span class="kh-vsep" aria-hidden="true"></span>
+      <div class="kh-user" id="kh-user" role="button" tabindex="0" aria-haspopup="menu" aria-expanded="false" title="계정">
+        <div class="kh-av" id="kh-av">?</div><span class="kh-name" id="user-name"></span><span class="kh-ch" aria-hidden="true">▾</span>
+        <div class="kh-menu" id="kh-menu" role="menu" hidden>
+          <div class="mh"><span class="av" id="kh-menu-av" aria-hidden="true"></span><span class="who"><span class="nm" id="kh-menu-nm"></span><span class="ml" id="kh-menu-ml"></span></span></div>
+          <a class="kh-mi" id="kh-menu-mail" role="menuitem" href="mailto:stk_it@hyosung.com"><svg class="kh-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg><span>문의 메일 쓰기 · <span id="kh-menu-contact">stk_it@hyosung.com</span></span></a>
+          <div class="sep"></div>
+          <button type="button" class="kh-lo" id="kh-lo" role="menuitem"><svg class="kh-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>로그아웃</button>
+        </div>
+      </div>
     </div>
   </header>
   <main>
@@ -599,8 +607,7 @@ async function applyConfig(cfg) {
   // KRI_CONTACT → 헤더 문의 이메일
   const contact = cfgVal(cfg, 'KRI_CONTACT', KRI_CONTACT);
   KRI_CONTACT = contact;
-  const cl = document.getElementById('contact-link');
-  if (cl) { cl.textContent = contact; cl.href = 'mailto:' + contact; }
+  kriSetContact(contact);
 
   // KRI_ADMIN_1만 슈퍼 어드민 (KRI_ADMIN_2, 3 제외 — 2026.06.26 오픈 전까지)
   const admin1Email = cfg && cfg['KRI_ADMIN_1'] ? cfg['KRI_ADMIN_1'].email : '';
@@ -760,6 +767,21 @@ async function signIn() {
   } catch(e) { showLoginError(e.message); }
 }
 function signOut() { msal_g.logoutRedirect(); }
+/* 11-18 머리 줄 — 문의 메일은 아이콘(마우스를 올리면 주소) · 계정 메뉴 「문의 메일 쓰기」, 이름은 짧게(「… IT(Jimmy Lee)」 → 괄호 안 영문) · 이니셜 */
+function kriSetContact(c) {
+  const cl = document.getElementById('contact-link'); if (cl) { cl.href = 'mailto:' + c; cl.title = '문의 ' + c; cl.setAttribute('aria-label', '문의 메일 ' + c); }
+  const mi = document.getElementById('kh-menu-mail'); if (mi) mi.href = 'mailto:' + c;
+  const mc = document.getElementById('kh-menu-contact'); if (mc) mc.textContent = c;
+}
+function kriSetUser(account) {
+  const full = String(account.name || account.username || '').trim(), m = /\(([^()]+)\)\s*$/.exec(full);
+  const short = (m ? m[1] : full || user.email || '').trim();
+  const ini = (short || '?').split(/\s+/).filter(Boolean).map(w => w[0]).join('').substring(0, 2).toUpperCase();
+  document.getElementById('user-name').textContent = short;
+  document.getElementById('kh-av').textContent = ini;
+  document.getElementById('kh-user').title = full + (user.email ? ' · ' + user.email : '');
+  window.__kriFull = full;
+}
 function showLoginError(msg) { const el=document.getElementById('login-err'); el.textContent=msg; el.style.display='block'; }
 
 async function boot(account) {
@@ -780,15 +802,14 @@ async function boot(account) {
 
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
-  document.getElementById('user-name').textContent = (account.name || account.username) + ' (' + (user.email || account.username) + ')';
+  kriSetUser(account);   // 11-18 머리 줄 — 짧은 이름 · 이니셜(사진은 아래 kri-head-js) · 계정 메뉴에 전체 이름 · 메일
 
 }
 
 window.addEventListener('load', async () => {
   renderCards();
   // Set contact email from KRI_CONTACT
-  const cl = document.getElementById('contact-link');
-  if (cl) { cl.textContent = KRI_CONTACT; cl.href = 'mailto:' + KRI_CONTACT; }
+  kriSetContact(KRI_CONTACT);
   const btn = document.getElementById('btn-login');
   const fallback = setTimeout(() => {
     if (btn && btn.disabled) { btn.disabled=false; btn.textContent='Hyosung M365 계정으로 로그인'; }
@@ -811,6 +832,128 @@ window.addEventListener('load', async () => {
     console.warn('MSAL init error:',e.message);
   }
 });
+</script>
+<style id="kri-head-css">
+/* 11-18 머리 줄 시안 5(슬레이트 + 보존 표시) — 짙은 회색 줄 · 테두리 아이콘 · 「읽기 전용 보존 자료 · 기준일」 · 문의 메일 아이콘 · HS APS · 사진 + 짧은 이름 ▾ 계정 메뉴 */
+header.kh{height:56px;padding:0 24px;background:linear-gradient(90deg,#111827,#1f2937);border-bottom:0;box-shadow:0 2px 10px rgba(0,0,0,.18);display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:100;color:#e5e7eb}
+.kh-i{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.kh-brand{display:flex;align-items:center;gap:10px;min-width:0}
+.kh-mark{width:30px;height:30px;border-radius:8px;border:1px solid rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;color:#93c5fd;flex:none}
+.kh-txt{min-width:0}
+.kh-ttl{font-size:.92rem;font-weight:700;color:#fff;letter-spacing:-.01em;white-space:nowrap}
+.kh-sub{font-size:.68rem;color:rgba(229,231,235,.55);margin-top:1px;white-space:nowrap}
+.kh-keep{display:inline-flex;align-items:center;gap:6px;margin-left:14px;font-size:.72rem;color:#fcd34d;background:rgba(252,211,77,.08);border:1px solid rgba(252,211,77,.28);border-radius:999px;padding:3px 11px;white-space:nowrap}
+.kh-keep .kh-i{width:12px;height:12px}
+.kh-right{display:flex;align-items:center;gap:4px;flex:none}
+.kh-ic{width:32px;height:32px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;color:rgba(229,231,235,.85);text-decoration:none;transition:background .15s}
+.kh-tl{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 10px;border-radius:7px;color:#e5e7eb;font-size:.78rem;font-weight:500;text-decoration:none;white-space:nowrap;transition:background .15s}
+.kh-ic:hover,.kh-tl:hover{background:rgba(255,255,255,.1);color:#fff}
+.kh-ic:focus-visible,.kh-tl:focus-visible{outline:2px solid #93c5fd;outline-offset:1px}
+.kh-vsep{width:1px;height:20px;background:rgba(255,255,255,.16);margin:0 8px 0 6px}
+.kh-user{position:relative;display:inline-flex;align-items:center;gap:8px;padding:3px 9px 3px 3px;border:1px solid transparent;border-radius:999px;cursor:pointer;user-select:none;transition:background .15s,border-color .15s}
+.kh-user:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16)}
+.kh-user[aria-expanded="true"]{background:rgba(255,255,255,.12);border-color:rgba(147,197,253,.7);box-shadow:0 0 0 3px rgba(147,197,253,.18)}
+.kh-user:focus-visible{outline:2px solid #93c5fd;outline-offset:2px}
+.kh-av{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#93c5fd,#3b82f6);color:#fff;font-size:.66rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none;background-size:cover;background-position:center;background-repeat:no-repeat}
+.kh-av.has-photo{color:transparent;background-color:#fff;box-shadow:0 0 0 1.5px rgba(255,255,255,.7)}
+#user-name.kh-name{font-size:.8rem;font-weight:600;color:#fff;white-space:nowrap;max-width:170px;overflow:hidden;text-overflow:ellipsis}
+.kh-ch{font-size:9px;color:#fff;opacity:.7}
+.kh-menu{position:absolute;right:0;top:calc(100% + 8px);width:310px;max-width:calc(100vw - 24px);background:#fff;border:1px solid #e1dfdd;border-radius:10px;box-shadow:0 10px 28px rgba(0,0,0,.2);padding:6px;z-index:200;text-align:left;color:#201f1e;cursor:default;font-size:12.5px}
+.kh-menu[hidden]{display:none}
+.kh-menu .mh{display:flex;gap:10px;align-items:center;padding:8px 10px 10px;border-bottom:1px solid #f0efed;margin-bottom:4px;min-width:0}
+.kh-menu .av{flex:none;width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#93c5fd,#3b82f6);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;background-size:cover;background-position:center}
+.kh-menu .av.has-photo{color:transparent;background:#fff center/cover no-repeat;box-shadow:0 0 0 1px #e1dfdd}
+.kh-menu .who{display:flex;flex-direction:column;min-width:0;line-height:1.4}
+.kh-menu .nm{font-weight:600;color:#323130;overflow-wrap:anywhere}
+.kh-menu .ml{font-size:11px;color:#8a8886;overflow-wrap:anywhere}
+.kh-menu .sep{height:1px;background:#f0efed;margin:4px 2px}
+.kh-mi,.kh-lo{appearance:none;cursor:pointer;width:100%;display:flex;align-items:center;gap:8px;padding:8px 10px;border:0;border-radius:7px;background:#fff;color:#323130;font-size:12.5px;font-family:inherit;text-align:left;text-decoration:none}
+.kh-mi:hover,.kh-mi:focus-visible{background:#f3f6fa;outline:none}
+.kh-lo{color:#a4262c;font-weight:600}
+.kh-lo:hover,.kh-lo:focus-visible{background:#fdf3f4;outline:none}
+@media (max-width:980px){.kh-keep span{display:none}.kh-keep{padding:4px 7px;margin-left:10px}}
+@media (max-width:640px){
+  header.kh{padding:0 12px}
+  .kh-sub,.kh-keep,.kh-tl span,#user-name.kh-name{display:none}
+  .kh-tl{padding:0 8px}
+  .kh-vsep{margin:0 4px}
+  .kh-ttl{font-size:.86rem}
+}
+</style>
+<script id="kri-head-js">
+/* 11-18 머리 줄 시안 5 — ① 내 사진: HS APS · 개인정보 동의서와 같은 원본(STK-DB 문서 라이브러리 맨 위 employee_photos.json)에서 내 메일 것만.
+   이 브라우저에 내 것 하나만 기억(localStorage kri.photo.v1 = { me, tag, img }) — 파일이 그대로면(cTag) 다시 받지 않음 · 없거나 못 읽으면 이니셜.
+   ② 계정 메뉴: 사진 · 이름을 누르면 전체 이름 · 메일 · 문의 메일 쓰기 · 로그아웃. 메뉴 밖 · Esc 로 닫힘, Enter · Space · ↓ 로 열림. */
+(function () {
+  'use strict';
+  var LS = 'kri.photo.v1', PHOTO = 'employee_photos.json', RE = /^data:image\/jpeg;base64,[A-Za-z0-9+/]+={0,2}$/;
+  var $ = function (id) { return document.getElementById(id); };
+  var box = $('kh-user'), dot = $('kh-av'), menu = $('kh-menu');
+  if (!box || !dot || !menu) return;
+  function setAv(img) {
+    [dot, $('kh-menu-av')].forEach(function (el) { if (!el) return; el.style.backgroundImage = img ? 'url("' + img + '")' : ''; el.classList.toggle('has-photo', !!img); });
+  }
+  function lsGet() { try { return JSON.parse(localStorage.getItem(LS) || 'null'); } catch (e) { return null; } }
+  function lsSet(v) { try { if (v) localStorage.setItem(LS, JSON.stringify(v)); else localStorage.removeItem(LS); } catch (e) {} }
+  function acct() { return (typeof user !== 'undefined' && user) || null; }
+  function myMails() {
+    var a = acct() || {}, c = a.idTokenClaims || {}, out = [];
+    [a.email, a.username, c.email, c.preferred_username].forEach(function (x) {
+      x = String(x || '').trim().toLowerCase(); if (!x || out.indexOf(x) >= 0) return; out.push(x);
+      var m = x.match(/^(.+)#ext#@/i); if (m) { var i = m[1].lastIndexOf('_'); if (i > 0) { var e = m[1].slice(0, i) + '@' + m[1].slice(i + 1); if (out.indexOf(e) < 0) out.push(e); } }   // 게스트 UPN → 메일
+    });
+    return out.filter(function (x) { return /^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(x); });
+  }
+  async function docDrive() {
+    var r = await api('/sites/' + siteId + '/drives');
+    var d = (r.value || []).find(function (x) { return ['Documents', '문서', 'Shared Documents'].indexOf(x.name) >= 0; }) || (r.value || [])[0];
+    return d ? d.id : '';
+  }
+  async function loadPhoto(me, c) {
+    if (!me.length) return;
+    try {
+      var d = await docDrive(); if (!d) return;
+      var t = await token(); if (!t) return;
+      var mr = await fetch(GRAPH + '/drives/' + d + '/root:/' + PHOTO + '?$select=id,cTag,eTag', { headers: { Authorization: 'Bearer ' + t }, cache: 'no-store' });
+      if (mr.status === 404) { lsSet(null); setAv(null); return; }
+      if (!mr.ok) return;
+      var meta = await mr.json(), tag = meta.cTag || meta.eTag || '';
+      if (c && me.indexOf(c.me) >= 0 && c.tag === tag) return;   // 파일이 그대로면 다시 받지 않음
+      var cr = await fetch(GRAPH + '/drives/' + d + '/items/' + encodeURIComponent(meta.id) + '/content', { headers: { Authorization: 'Bearer ' + t }, cache: 'no-store' });
+      if (!cr.ok) return;
+      var j = await cr.json(), u = j && j.v === 1 && j.users && typeof j.users === 'object' ? j.users : {};
+      var low = {}; Object.keys(u).forEach(function (k) { low[String(k).toLowerCase()] = u[k]; });
+      var key = me.find(function (k) { return typeof low[k] === 'string' && RE.test(low[k]); });
+      if (key) { lsSet({ me: key, tag: tag, img: low[key] }); setAv(low[key]); } else { lsSet({ me: me[0], tag: tag, img: '' }); setAv(null); }
+    } catch (e) { console.warn('[KRI] 계정 사진을 읽지 못함(이니셜로 표시):', e && e.message); }
+  }
+  var c0 = lsGet(); if (c0 && RE.test(c0.img || '')) { try { var pre = new Image(); pre.src = c0.img; } catch (e) {} }
+  var shown = false, fetched = false, iv = 0, mo = null;
+  function tick() {
+    var a = acct(); if (!a || !a.email) return;
+    var me = myMails();
+    if (!shown) { shown = true; var c = lsGet(); if (c && me.indexOf(c.me) >= 0 && RE.test(c.img || '')) setAv(c.img); else if (c && me.indexOf(c.me) < 0) lsSet(null); }   // 다른 계정의 기억은 지움
+    if (!fetched && typeof siteId !== 'undefined' && siteId) { fetched = true; clearInterval(iv); if (mo) mo.disconnect(); loadPhoto(me, lsGet()); }
+  }
+  if (window.MutationObserver) { mo = new MutationObserver(tick); mo.observe($('user-name') || dot, { childList: true, characterData: true, subtree: true }); }
+  var tries = 0; iv = setInterval(function () { tick(); if (++tries > 240) clearInterval(iv); }, 400);
+  // 계정 메뉴
+  var lo = $('kh-lo');
+  function fill() {
+    var a = acct() || {};
+    $('kh-menu-nm').textContent = window.__kriFull || a.name || ($('user-name') || {}).textContent || '';
+    $('kh-menu-ml').textContent = a.email || a.username || '';
+    var av = $('kh-menu-av'); if (av && !av.classList.contains('has-photo')) av.textContent = (dot.textContent || '').trim();
+  }
+  function place() { menu.style.left = ''; menu.style.right = ''; var br = box.getBoundingClientRect(), w = menu.offsetWidth, L = Math.min(Math.max(br.right - w, 8), Math.max(8, innerWidth - w - 8)); menu.style.right = 'auto'; menu.style.left = Math.round(L - br.left) + 'px'; }
+  function open() { fill(); menu.hidden = false; place(); box.setAttribute('aria-expanded', 'true'); setTimeout(function () { document.addEventListener('click', onDoc); document.addEventListener('keydown', onKey, true); }, 0); }
+  function close(focus) { menu.hidden = true; box.setAttribute('aria-expanded', 'false'); document.removeEventListener('click', onDoc); document.removeEventListener('keydown', onKey, true); if (focus) box.focus(); }
+  function onDoc(e) { if (!box.contains(e.target)) close(false); }
+  function onKey(e) { if (e.key === 'Escape') { e.preventDefault(); close(true); } }
+  box.addEventListener('click', function (e) { if (menu.contains(e.target) && !e.target.closest('a')) return; if (menu.contains(e.target)) { close(false); return; } menu.hidden ? open() : close(false); });
+  box.addEventListener('keydown', function (e) { if (e.target !== box) return; if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') { e.preventDefault(); if (menu.hidden) { open(); $('kh-menu-mail').focus(); } else close(true); } });
+  lo.addEventListener('click', function () { lsSet(null); close(false); try { signOut(); } catch (e) { console.warn('[KRI] 로그아웃 실패:', e && e.message); } });
+})();
 </script>
 </body>
 </html>
